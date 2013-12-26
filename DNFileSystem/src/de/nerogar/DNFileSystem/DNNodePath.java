@@ -3,7 +3,6 @@ package de.nerogar.DNFileSystem;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.LinkedList;
 
 public class DNNodePath {
 	protected String name;
