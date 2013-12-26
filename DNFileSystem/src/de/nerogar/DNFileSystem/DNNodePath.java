@@ -1,6 +1,9 @@
 package de.nerogar.DNFileSystem;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class DNNodePath {
 	protected String name;
@@ -34,10 +37,11 @@ public class DNNodePath {
 	public DNNodePath getPath(String pathName) {
 		String[] pathArray = pathName.split("\\.");
 		DNNodePath localPath = this;
-		for (int i = 0; i < pathArray.length - 1; i++) {
+		for (int i = 0; i < pathArray.length; i++) {
 			DNNodePath tempPath = localPath.getPaths().get(pathArray[i]);
 			if (tempPath == null) {
 				tempPath = new DNNodePath(pathArray[i]);
+				localPath.paths.put(pathArray[i], tempPath);
 			}
 			localPath = tempPath;
 		}
@@ -52,7 +56,8 @@ public class DNNodePath {
 	 * @param name can either be the name of the node or a path to the node.<br>
 	 */
 	public DNNode getNode(String name) {
-		return getPath(name).getNodes().get((getNodeName(name)));
+
+		return getPath(getPathName(name)).getNodes().get((getNodeName(name)));
 	}
 
 	/**
@@ -440,9 +445,19 @@ public class DNNodePath {
 	}
 
 	protected void addNode(String newName, byte typ, int length, Object value) {
-		DNNodePath localPath = addPath(newName);
+		DNNodePath localPath = addPath(getPathName(newName));
 		String newNodeName = getNodeName(newName);
 		localPath.nodes.put(newNodeName, new DNNode(newNodeName, typ, length, value));
+	}
+
+	protected String getPathName(String pathName) {
+		ArrayList<String> tempPath = new ArrayList<String>(Arrays.asList(pathName.split("\\.")));
+		tempPath.remove(tempPath.size() - 1);
+		StringBuilder newPath = new StringBuilder();
+		for (int i = 0; i < tempPath.size(); i++) {
+			newPath.append(i < tempPath.size() - 1 ? tempPath.get(i) + "." : tempPath.get(i));
+		}
+		return newPath.toString();
 	}
 
 	protected String getNodeName(String pathName) {
