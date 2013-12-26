@@ -191,7 +191,7 @@ public class DNFile extends DNNodePath {
 		}
 
 		for (DNNodePath node : path.paths.values()) {
-			DNTagWriter.writeFolderTag(out, path.name, path.getNodes().size() + path.getPaths().size());
+			DNTagWriter.writeFolderTag(out, node.name, node.getNodes().size() + node.getPaths().size());
 			writeFile(out, node);
 		}
 	}

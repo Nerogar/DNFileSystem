@@ -30,20 +30,22 @@ public class DNNodePath {
 
 	/**
 	 * Returns the DNNodePath object specified by the parameter <b>pathName</b>.<br>
-	 * If the specified path does not exist, it is created
+	 * If the specified path does not exist, it gets created.
 	 * 
-	 * @param pathName the name of the path that is returned
+	 * @param pathName the name of the path
 	 */
 	public DNNodePath getPath(String pathName) {
 		String[] pathArray = pathName.split("\\.");
 		DNNodePath localPath = this;
-		for (int i = 0; i < pathArray.length; i++) {
-			DNNodePath tempPath = localPath.getPaths().get(pathArray[i]);
-			if (tempPath == null) {
-				tempPath = new DNNodePath(pathArray[i]);
-				localPath.paths.put(pathArray[i], tempPath);
+		if (!pathName.equals("")) {
+			for (int i = 0; i < pathArray.length; i++) {
+				DNNodePath tempPath = localPath.getPaths().get(pathArray[i]);
+				if (tempPath == null) {
+					tempPath = new DNNodePath(pathArray[i]);
+					localPath.paths.put(pathArray[i], tempPath);
+				}
+				localPath = tempPath;
 			}
-			localPath = tempPath;
 		}
 
 		return localPath;
@@ -58,14 +60,6 @@ public class DNNodePath {
 	public DNNode getNode(String name) {
 
 		return getPath(getPathName(name)).getNodes().get((getNodeName(name)));
-	}
-
-	/**
-	 * Adds a new path to the system. The path is specified by the parameter <b>name</b>.
-	 * @param name  can either be the name of the node or a path to the node.
-	 */
-	public DNNodePath addPath(String name) {
-		return getPath(name);
 	}
 
 	/**
@@ -445,7 +439,7 @@ public class DNNodePath {
 	}
 
 	protected void addNode(String newName, byte typ, int length, Object value) {
-		DNNodePath localPath = addPath(getPathName(newName));
+		DNNodePath localPath = getPath(getPathName(newName));
 		String newNodeName = getNodeName(newName);
 		localPath.nodes.put(newNodeName, new DNNode(newNodeName, typ, length, value));
 	}
