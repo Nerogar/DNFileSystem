@@ -51,6 +51,16 @@ public class DNNodePath {
 	}
 
 	/**
+	 * Adds a DNNodePath object to the current path.<br>
+	 * The name has to be set in the obect itself.
+	 * 
+	 * @param path the DNNodePath object to add
+	 */
+	public void addPathObject(DNNodePath path) {
+		paths.put(path.name, path);
+	}
+
+	/**
 	 * Returns the DNNode object specified by the parameter <b>name</b>.<br>
 	 * The name can either be the name of the node or a path to the node.
 	 * 
