@@ -9,7 +9,7 @@ public class DNNodePath {
 	protected HashMap<String, DNNodePath> paths = new HashMap<String, DNNodePath>();
 	protected HashMap<String, DNNode> nodes = new HashMap<String, DNNode>();
 
-	protected DNNodePath(String name) {
+	public DNNodePath(String name) {
 		this.name = name;
 	}
 
